@@ -1,0 +1,52 @@
+# 신랑
+groom:
+  name: 이동현
+  account: "우리 1002-347-978730"
+  father:
+    name: 이석행
+  mother:
+    name: 김건영
+
+# 신부
+bride:
+  name: 송하연
+  account: "국민 809102-04-071092"
+  father:
+    name: 송원재
+    account: "국민 464825-95-103524"
+  mother:
+    name: 황보윤경
+    account: "국민 818-21-0107-806"
+
+# 일시/장소
+wedding:
+  date: "2026-05-09"
+  time: "12:30"
+  hero_image: "/assets/images/hero.webp"
+  venue:
+    name: 오드힐하우스
+    address: "서울시 서초구 방배로 47 오드힐하우스"
+    maps:
+      naver:
+        web: "https://naver.me/GkR7Dnc9"
+      kakao:
+        web: "https://place.map.kakao.com/831689556"
+        placeId: "831689556"
+
+# 교통
+transport:
+  public: "2호선 방배역 2번 출구, 도보 약 4분"
+  parking: "총 120대 (자체 주차장 50대 + 방배동 공영 70대)"
+
+# 화면 문구 (copy)
+copy:
+  hero_greeting: ""
+  contribution_info: "참석이 어려우신 분들을 위해 마련했습니다. <br>너그러운 마음으로 양해 부탁드립니다."
+  guestbook_cta: "카카오톡 로그인하여 축하 메시지 남기기"
+  guestbook_placeholder: "신랑신부에게 전하고 싶은 메세지를 입력해주세요"
+  rsvp_cta: "카카오톡 로그인하여 참석 여부 전달하기"
+  section_location: "Location"
+  section_contribution: "마음 전하실 곳"
+  section_gallery: "저희는요"
+  section_guestbook: "방명록"
+  section_rsvp: "RSVP"
