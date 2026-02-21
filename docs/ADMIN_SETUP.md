@@ -2,11 +2,10 @@
 
 ## 1. DB 마이그레이션 실행
 
-Supabase 대시보드 → SQL Editor에서 아래 마이그레이션을 실행하세요.
+Supabase 대시보드 → SQL Editor에서 아래 마이그레이션을 순서대로 실행하세요.
 
-```sql
--- supabase/migrations/20250221100000_create_profiles.sql 내용 실행
-```
+1. `supabase/migrations/20250221100000_create_profiles.sql`
+2. `supabase/migrations/20250221110000_rsvp_admin_with_names.sql` (이름 표시용 RPC)
 
 또는 Supabase CLI 사용 시:
 
