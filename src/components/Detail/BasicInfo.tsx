@@ -15,7 +15,7 @@ function getDaysUntil(dateStr: string): number {
 }
 
 function isHoliday(month: number, day: number): boolean {
-  return (month === 4 && day === 5) // 5월 5일 어린이날
+  return (month === 4 && day === 5) || (month === 4 && day === 25) // 5월 5일 어린이날, 5월 25일 부처님 오신 날
 }
 
 function Calendar({ dateStr }: { dateStr: string }) {
@@ -36,12 +36,15 @@ function Calendar({ dateStr }: { dateStr: string }) {
   const weekdays = ['일', '월', '화', '수', '목', '금', '토']
 
   return (
-    <div className="mt-6 w-full max-w-[360px] px-1">
-      <div className="grid w-full grid-cols-7 gap-x-2 gap-y-3 text-center font-maruburi text-[12.9px]">
+    <div className="w-[359.82px] min-w-[359.82px]">
+      <div
+        className="grid w-full gap-0 text-center font-maruburi text-[12.9px]"
+        style={{ gridTemplateColumns: 'repeat(7, 51.4px)', gridAutoRows: '51.4px' }}
+      >
         {weekdays.map((w, i) => (
           <span
             key={w}
-            className={`flex h-[34px] items-center justify-center font-semibold ${
+            className={`flex h-[51.4px] w-[51.4px] items-center justify-center font-semibold ${
               i === 0 ? 'text-red-400' : i === 6 ? 'text-[#c4b5a8]' : 'text-[#fdeee0]'
             }`}
           >
@@ -59,7 +62,7 @@ function Calendar({ dateStr }: { dateStr: string }) {
           return (
             <span
               key={i}
-              className={`relative flex h-[51px] w-full min-w-0 items-center justify-center rounded-[19px] font-normal text-[15px] ${
+              className={`relative flex h-[51.4px] w-[51.4px] items-center justify-center rounded-[19px] font-normal text-[15px] ${
                 d === null
                   ? ''
                   : isWeddingDay
@@ -76,7 +79,7 @@ function Calendar({ dateStr }: { dateStr: string }) {
                   <img
                     src="/assets/icons/section/wedding-date.svg"
                     alt=""
-                    className="absolute left-1/2 top-1/2 h-[51.4px] w-[51.4px] -translate-x-1/2 -translate-y-1/2 object-contain opacity-90"
+                    className="absolute left-1/2 top-1/2 h-10 w-10 -translate-x-1/2 -translate-y-1/2 object-contain opacity-90"
                     aria-hidden
                   />
                   <span className="relative z-10 font-bold text-[#3b291e]">{d}</span>
@@ -98,7 +101,7 @@ export function BasicInfo({ config }: BasicInfoProps) {
 
   return (
     <Section>
-      <div className="flex flex-col items-center gap-[30px] px-5">
+      <div className="flex flex-col items-center gap-[60px] px-5">
         <div className="flex items-center justify-center gap-2">
           <Icon src="/assets/icons/section/invitation.svg" size={26} className="text-[#fdeee0]" />
           <h2 className="font-maruburi text-base font-bold text-[#fdeee0]">Invitation</h2>
@@ -118,21 +121,23 @@ export function BasicInfo({ config }: BasicInfoProps) {
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-center font-maruburi text-lg font-bold text-[#fdeee0]">
-            {new Date(wedding.date).toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              weekday: 'long',
-            })}{' '}
-            {wedding.time.includes(':') ? wedding.time.replace(':', '시') + '분' : wedding.time}
-          </p>
-          <p className="text-center font-maruburi text-sm font-normal text-[#fdeee0]">
-            결혼식까지 D-{dDay}
-          </p>
+        <div className="flex flex-col items-center gap-[18px]">
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-center font-maruburi text-lg font-bold text-[#fdeee0]">
+              {new Date(wedding.date).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+              })}{' '}
+              {wedding.time.includes(':') ? wedding.time.replace(':', '시') + '분' : wedding.time}
+            </p>
+            <p className="text-center font-maruburi text-sm font-normal text-[#fdeee0]">
+              결혼식까지 D-{dDay}
+            </p>
+          </div>
+          <Calendar dateStr={wedding.date} />
         </div>
-        <Calendar dateStr={wedding.date} />
       </div>
     </Section>
   )

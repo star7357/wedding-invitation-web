@@ -48,7 +48,8 @@ export function Location({ config }: LocationProps) {
             </button>
           </div>
         </div>
-        <div className="flex w-full flex-col gap-[13px]">
+        <div className="flex w-full flex-col gap-[32px]">
+          <div className="flex w-full flex-col gap-[13px]">
           <div className="relative w-full">
             <KakaoMap
               ref={mapRef}
@@ -98,7 +99,7 @@ export function Location({ config }: LocationProps) {
             </button>
           </div>
         </div>
-        <div className="w-full space-y-3">
+        <div className="w-full space-y-[32px]">
           <div>
             <div className="flex items-center gap-1">
               <Icon src="/assets/icons/location/public-transportation.svg" size={16} className="text-[#feeee0]" />
@@ -113,6 +114,7 @@ export function Location({ config }: LocationProps) {
             </div>
             <p className="mt-1.5 font-maruburi text-sm font-semibold">{transport.parking}</p>
           </div>
+        </div>
         </div>
         {toast &&
           createPortal(
