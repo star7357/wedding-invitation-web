@@ -72,18 +72,18 @@ export function Hero({ config }: HeroProps) {
         aria-hidden
       />
 
-      <div className="absolute left-[21px] top-[118px] z-10 w-[359px]">
+      <div className="absolute left-1/2 top-[118px] z-10 w-[330px] -translate-x-1/2">
         <img
           src="/assets/icons/icon_name.png"
           alt={`${groom.name} ${bride.name}`}
-          className="h-[98px] w-full object-contain object-left"
+          className="h-[90px] w-full object-contain object-center"
         />
       </div>
 
       <img
         src="/assets/icons/hero/heart.svg"
         alt=""
-        className="absolute left-1/2 top-[323px] z-10 h-[52px] w-[68px] -translate-x-1/2 opacity-90"
+        className="absolute left-1/2 top-[323px] z-10 h-[52px] w-[68px] animate-sway opacity-90"
       />
 
       <img

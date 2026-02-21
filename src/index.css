@@ -124,6 +124,19 @@ body {
   }
 }
 
+.animate-sway {
+  animation: sway 2.5s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-4deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(4deg);
+  }
+}
+
 .section-card {
   border-radius: 12px;
   background: var(--color-bg);
