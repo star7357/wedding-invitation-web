@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Section } from '@/components/layout/Section'
 import { Icon } from '@/components/ui/Icon'
 import { GuestbookEntryLightbox } from './GuestbookEntryLightbox'
@@ -150,6 +150,14 @@ export function Guestbook({ config }: GuestbookProps) {
   const { entries, loading, error, heartLikedIds, addEntry, deleteEntry, toggleHeart } = useGuestbook(user?.id)
   const { toast, showToast } = useToast()
   const [message, setMessage] = useState('')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 120)}px`
+  }, [message])
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
@@ -270,13 +278,14 @@ export function Guestbook({ config }: GuestbookProps) {
           </button>
         ) : (
           <div className="flex w-full flex-col gap-2">
-            <div className="flex h-[54px] w-full min-w-0 items-center gap-1.5 self-center overflow-hidden rounded-[5px] bg-[#f7f4f124] px-3 py-2">
+            <div className="flex min-h-[54px] w-full min-w-0 items-center gap-1.5 self-center rounded-[5px] bg-[#f7f4f124] px-3 py-2">
               <textarea
+                ref={textareaRef}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={config.copy.guestbook_placeholder ?? '신랑신부에게 전하고 싶은 메세지를 입력해주세요'}
                 rows={1}
-                className="min-h-[36px] min-w-0 flex-1 resize-none self-center bg-transparent py-[10px] font-maruburi leading-[1.4] text-[#f7f4f1] placeholder:text-[#f7f4f1]/60 focus:outline-none"
+                className="min-h-[36px] max-h-[120px] min-w-0 flex-1 resize-none self-center overflow-y-auto bg-transparent py-[10px] font-maruburi leading-[1.4] text-[#f7f4f1] placeholder:text-[#f7f4f1]/60 focus:outline-none scrollbar-hide"
                 style={{ fontSize: 13 }}
               />
               <button
