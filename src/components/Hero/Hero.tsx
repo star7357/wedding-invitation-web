@@ -24,7 +24,36 @@ export function Hero({ config }: HeroProps) {
   const { groom, bride, wedding } = config
   const dateTime = formatDateTime(wedding.date, wedding.time)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [showMusicToast, setShowMusicToast] = useState(false)
+  const [isFadingOut, setIsFadingOut] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!showMusicToast) return
+    const timer = setTimeout(() => {
+      setIsFadingOut(true)
+      setTimeout(() => {
+        setShowMusicToast(false)
+        setIsFadingOut(false)
+      }, 300)
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [showMusicToast])
+
+  const startMusic = async () => {
+    if (!audioRef.current) return
+    try {
+      await audioRef.current.play()
+      setIsPlaying(true)
+      setIsFadingOut(true)
+      setTimeout(() => {
+        setShowMusicToast(false)
+        setIsFadingOut(false)
+      }, 300)
+    } catch {
+      /* ignore */
+    }
+  }
 
   useEffect(() => {
     const src = wedding.bg_music
@@ -32,7 +61,7 @@ export function Hero({ config }: HeroProps) {
     const audio = new Audio(src)
     audio.loop = true
     audioRef.current = audio
-    audio.play().then(() => setIsPlaying(true)).catch(() => { /* autoplay blocked */ })
+    setShowMusicToast(true) /* show toast - user taps to play */
     return () => {
       audio.pause()
       audioRef.current = null
@@ -70,14 +99,33 @@ export function Hero({ config }: HeroProps) {
       />
 
       {wedding.bg_music && (
-        <button
-          type="button"
-          onClick={toggleMusic}
-          className={`absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-[7px] bg-[#feeee0]/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm transition-opacity ${!isPlaying ? 'opacity-70' : 'opacity-100'}`}
-          aria-label={isPlaying ? '배경음악 일시정지' : '배경음악 재생'}
+        <div
+          className="absolute left-4 top-4 z-30 flex items-center gap-2"
+          style={{ top: 'max(1rem, env(safe-area-inset-top, 0px))' }}
         >
-          <Icon src="/assets/icons/icon_music.svg" size={20} className="text-[#feeee0]" />
-        </button>
+          <button
+            type="button"
+            onClick={toggleMusic}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[7px] bg-[#feeee0]/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm transition-opacity ${!isPlaying ? 'opacity-70' : 'opacity-100'}`}
+            aria-label={isPlaying ? '배경음악 일시정지' : '배경음악 재생'}
+          >
+            <Icon src="/assets/icons/icon_music.svg" size={20} className="text-[#feeee0]" />
+          </button>
+          {showMusicToast && (
+            <button
+              type="button"
+              onClick={startMusic}
+              className={`relative rounded-[10px] bg-black/40 px-3 py-2 font-maruburi text-sm text-[#feeee0] backdrop-blur-sm transition-opacity hover:bg-black/50 ${isFadingOut ? 'animate-fade-out' : 'animate-fade-in'}`}
+              aria-label="배경음악 재생"
+            >
+              <span
+                className="absolute -left-1 top-1/2 h-0 w-0 -translate-y-1/2 border-[6px] border-transparent border-r-white"
+                aria-hidden
+              />
+              <span>배경음악이 준비되었습니다</span>
+            </button>
+          )}
+        </div>
       )}
 
       <div
