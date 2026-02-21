@@ -285,8 +285,7 @@ export function Guestbook({ config }: GuestbookProps) {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={config.copy.guestbook_placeholder ?? '신랑신부에게 전하고 싶은 메세지를 입력해주세요'}
                 rows={1}
-                className="min-h-[36px] max-h-[120px] min-w-0 flex-1 resize-none self-center overflow-y-auto bg-transparent py-[10px] font-maruburi leading-[1.4] text-[#f7f4f1] placeholder:text-[#f7f4f1]/60 focus:outline-none scrollbar-hide"
-                style={{ fontSize: 13 }}
+                className="min-h-[36px] max-h-[120px] min-w-0 flex-1 resize-none self-center overflow-y-auto bg-transparent py-[10px] font-maruburi text-base text-[#f7f4f1] placeholder:text-[13px] placeholder:leading-[24px] placeholder:text-[#f7f4f1]/60 focus:outline-none scrollbar-hide"
               />
               <button
                 type="button"
