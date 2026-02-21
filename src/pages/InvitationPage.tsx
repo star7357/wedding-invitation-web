@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { MobileFrame } from '@/components/layout/MobileFrame'
 import { useAuth } from '@/hooks/useAuth'
+import { useAdmin } from '@/hooks/useAdmin'
 import { Hero } from '@/components/Hero/Hero'
 import { BasicInfo } from '@/components/Detail/BasicInfo'
 import { Location } from '@/components/Detail/Location'
@@ -12,7 +14,9 @@ import { loadInvitationConfig } from '@/config/invitation'
 import type { InvitationConfig } from '@/config/invitation'
 
 export function InvitationPage() {
+  const navigate = useNavigate()
   const { user, signOut } = useAuth()
+  const { isAdmin } = useAdmin(user?.id)
   const [config, setConfig] = useState<InvitationConfig | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -52,7 +56,7 @@ export function InvitationPage() {
         <Guestbook config={config} />
         <RSVP config={config} />
         {user && (
-          <div className="flex justify-center px-4 pb-8">
+          <div className="flex flex-col items-center gap-2 px-4 pb-8">
             <button
               type="button"
               onClick={() => setShowLogoutConfirm(true)}
@@ -60,6 +64,15 @@ export function InvitationPage() {
             >
               로그아웃
             </button>
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={() => navigate('/admin')}
+                className="text-xs text-[#f7f4f1]/60 hover:text-[#f7f4f1]/80"
+              >
+                admin 페이지 이동하기
+              </button>
+            )}
           </div>
         )}
       </div>
