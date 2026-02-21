@@ -99,10 +99,10 @@ export function Hero({ config }: HeroProps) {
       />
 
       <div className="absolute left-0 right-0 top-[667px] z-30 flex flex-col items-center gap-[7px] px-4">
-        <p className="font-maruburi text-center text-[15px] font-semibold leading-[17.2px] tracking-normal text-[#feeee0]">
+        <p className="font-maruburi text-center text-[15px] font-normal leading-[17.2px] tracking-normal text-[#feeee0]">
           {dateTime}
         </p>
-        <p className="font-maruburi text-center text-[15px] font-semibold leading-[17.2px] tracking-normal text-[#feeee0]">
+        <p className="font-maruburi text-center text-[15px] font-normal leading-[17.2px] tracking-normal text-[#feeee0]">
           {wedding.venue.name}
         </p>
       </div>
