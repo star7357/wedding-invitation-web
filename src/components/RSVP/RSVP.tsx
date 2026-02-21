@@ -156,7 +156,8 @@ export function RSVP({ config }: RSVPProps) {
                 }
               }}
               disabled={!import.meta.env.VITE_SUPABASE_URL}
-              className="flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEA91] px-[13px] py-[17px] font-maruburi text-sm font-semibold text-[#3b291e] shadow-[1px_2.5px_4px_#28170d] transition hover:opacity-90 disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEA91] px-[13px] py-[17px] font-maruburi font-semibold text-[#3b291e] shadow-[1px_2.5px_4px_#28170d] transition hover:opacity-90 disabled:opacity-50"
+              style={{ fontSize: 13 }}
             >
               <img src="/assets/icons/auth/kakaotalk.svg" alt="" className="h-5 w-5 shrink-0 object-contain" aria-hidden />
               {config.copy.rsvp_cta ?? '카카오톡 로그인하여 참석 여부 전달하기'}
@@ -168,7 +169,7 @@ export function RSVP({ config }: RSVPProps) {
   }
 
   const ctaButtonClass =
-    'flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEEE0] px-[13px] py-[17px] font-maruburi text-sm font-semibold text-[#3b291e] transition hover:opacity-90 disabled:opacity-50'
+    'flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEEE0] px-[13px] py-[17px] font-maruburi text-[13px] font-semibold text-[#3b291e] transition hover:opacity-90 disabled:opacity-50'
 
   const BeforeWriteView = () => (
     <div className="flex w-full flex-col gap-4">
@@ -182,7 +183,7 @@ export function RSVP({ config }: RSVPProps) {
           ))}
         </ul>
       </div>
-      <button type="button" onClick={() => setShowForm(true)} className={ctaButtonClass}>
+      <button type="button" onClick={() => setShowForm(true)} className={ctaButtonClass} style={{ fontSize: 13 }}>
         참석 정보 입력하기
       </button>
     </div>
@@ -320,7 +321,7 @@ export function RSVP({ config }: RSVPProps) {
         <button
           type="submit"
           disabled={submitting}
-          className="flex min-h-[42px] flex-1 items-center justify-center rounded-[5px] bg-[#FEEEE0] px-[13px] py-[17px] font-maruburi text-sm font-semibold text-[#3b291e] transition hover:opacity-90 disabled:opacity-50"
+          className="flex min-h-[42px] flex-1 items-center justify-center rounded-[5px] bg-[#FEEEE0] px-[13px] py-[17px] font-maruburi text-[13px] font-semibold text-[#3b291e] transition hover:opacity-90 disabled:opacity-50"
         >
           참석 정보 저장하기
         </button>
@@ -356,7 +357,7 @@ export function RSVP({ config }: RSVPProps) {
           })}
         </div>
       </div>
-      <button type="button" onClick={() => setIsEditing(true)} className={ctaButtonClass}>
+      <button type="button" onClick={() => setIsEditing(true)} className={ctaButtonClass} style={{ fontSize: 13 }}>
         참석 정보 수정하기
       </button>
     </div>
@@ -382,7 +383,7 @@ export function RSVP({ config }: RSVPProps) {
             <button
               type="button"
               onClick={() => refetch()}
-              className="rounded-[5px] bg-[#FEEEE0] px-[13px] py-2 font-maruburi text-sm font-semibold text-[#3b291e] hover:opacity-90"
+              className="rounded-[5px] bg-[#FEEEE0] px-[13px] py-2 font-maruburi text-[13px] font-semibold text-[#3b291e] hover:opacity-90"
             >
               다시 시도
             </button>

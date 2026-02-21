@@ -196,7 +196,7 @@ export function Guestbook({ config }: GuestbookProps) {
 
   return (
     <Section>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-[30px]">
         <div className="flex items-center justify-center gap-1.5">
           <Icon src="/assets/icons/section/guestbook.svg" size={26} className="text-[#feeee0]" />
           <h2 className="font-maruburi text-base font-bold text-[#feeee0]">
@@ -256,7 +256,8 @@ export function Guestbook({ config }: GuestbookProps) {
                 alert(`카카오 로그인 실패: ${msg}\n\n브라우저 콘솔(F12)에서 자세한 오류를 확인해보세요.`)
               }
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEA91] px-[13px] py-[17px] font-maruburi text-sm font-semibold text-[#3b291e] shadow-[1px_2.5px_4px_#28170d]"
+            className="flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEA91] px-[13px] py-[17px] font-maruburi font-semibold text-[#3b291e] shadow-[1px_2.5px_4px_#28170d]"
+            style={{ fontSize: 13 }}
           >
             <img
               src="/assets/icons/auth/kakaotalk.svg"
@@ -274,7 +275,8 @@ export function Guestbook({ config }: GuestbookProps) {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={config.copy.guestbook_placeholder ?? '신랑신부에게 전하고 싶은 메세지를 입력해주세요'}
                 rows={1}
-                className="min-h-[36px] min-w-0 flex-1 resize-none self-center bg-transparent py-[10px] font-maruburi text-base text-[#f7f4f1] placeholder:text-sm placeholder:leading-[24px] placeholder:text-[#f7f4f1]/60 focus:outline-none"
+                className="min-h-[36px] min-w-0 flex-1 resize-none self-center bg-transparent py-[10px] font-maruburi text-[#f7f4f1] placeholder:leading-[24px] placeholder:text-[#f7f4f1]/60 focus:outline-none"
+                style={{ fontSize: 13 }}
               />
               <button
                 type="button"
