@@ -8,9 +8,11 @@ export function useAdmin(userId: string | undefined) {
   useEffect(() => {
     if (!supabase || !userId) {
       setLoading(false)
+      setIsAdmin(false)
       return
     }
 
+    let cancelled = false
     const checkAdmin = async () => {
       if (!supabase) return
       setLoading(true)
@@ -22,15 +24,18 @@ export function useAdmin(userId: string | undefined) {
           .eq('id', userId)
           .single()
         if (error) throw error
-        setIsAdmin(data?.is_admin ?? false)
+        if (!cancelled) setIsAdmin(data?.is_admin ?? false)
       } catch {
-        setIsAdmin(false)
+        if (!cancelled) setIsAdmin(false)
       } finally {
-        setLoading(false)
+        if (!cancelled) setLoading(false)
       }
     }
 
     checkAdmin()
+    return () => {
+      cancelled = true
+    }
   }, [userId])
 
   return { isAdmin, loading }
