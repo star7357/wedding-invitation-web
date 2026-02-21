@@ -69,28 +69,32 @@ export function Location({ config }: LocationProps) {
             <button
               type="button"
               onClick={() => openNaverMap(venue.maps, venue.name)}
-              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#B6D383] px-2.5 py-2.5 font-maruburi text-sm font-semibold text-[#3e5318] shadow-[1px_2.5px_4px_#28170d]"
+              className="flex flex-1 items-center justify-center rounded-[5px] bg-[#C5F9B8] px-2.5 py-2.5 text-sm font-semibold text-[#3E8D5B] shadow-[1px_2.5px_4px_#28170d]"
             >
-              <img
-                src="/assets/icons/icon_navermap.png"
-                alt=""
-                className="h-5 w-5 shrink-0 object-contain"
-                aria-hidden
-              />
-              네이버지도
+              <div className="flex items-center gap-[5px]">
+                <img
+                  src="/assets/icons/icon_navermap.png"
+                  alt=""
+                  className="h-5 w-5 shrink-0 object-contain"
+                  aria-hidden
+                />
+                네이버지도
+              </div>
             </button>
             <button
               type="button"
               onClick={() => openKakaoMap(venue.maps)}
-              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#FFEA91] px-2.5 py-2.5 font-maruburi text-sm font-semibold text-[#665718] shadow-[1px_2.5px_4px_#28170d]"
+              className="flex flex-1 items-center justify-center rounded-[5px] bg-[#FFF5A3] px-2.5 py-2.5 text-sm font-medium text-[#938A3E] shadow-[1px_2.5px_4px_#28170d]"
             >
-              <img
-                src="/assets/icons/icon_kakaomap.png"
-                alt=""
-                className="h-5 w-5 shrink-0 object-contain"
-                aria-hidden
-              />
-              카카오맵
+              <div className="flex items-center gap-[10px]">
+                <img
+                  src="/assets/icons/icon_kakaomap.png"
+                  alt=""
+                  className="h-5 w-5 shrink-0 object-contain"
+                  aria-hidden
+                />
+                카카오맵
+              </div>
             </button>
           </div>
         </div>
