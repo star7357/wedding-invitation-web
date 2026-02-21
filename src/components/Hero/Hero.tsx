@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Section } from '@/components/layout/Section'
 import { Icon } from '@/components/ui/Icon'
 import type { InvitationConfig } from '@/config/invitation'
@@ -25,6 +25,19 @@ export function Hero({ config }: HeroProps) {
   const dateTime = formatDateTime(wedding.date, wedding.time)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    const src = wedding.bg_music
+    if (!src) return
+    const audio = new Audio(src)
+    audio.loop = true
+    audioRef.current = audio
+    audio.play().then(() => setIsPlaying(true)).catch(() => { /* autoplay blocked */ })
+    return () => {
+      audio.pause()
+      audioRef.current = null
+    }
+  }, [wedding.bg_music])
 
   const toggleMusic = async () => {
     const src = wedding.bg_music
