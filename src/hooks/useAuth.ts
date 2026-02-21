@@ -28,7 +28,10 @@ export function useAuth() {
 
   const signInWithKakao = async () => {
     if (!supabase) return
-    await supabase.auth.signInWithOAuth({ provider: 'kakao' })
+    await supabase.auth.signInWithOAuth({
+      provider: 'kakao',
+      options: { redirectTo: `${window.location.origin}/` },
+    })
   }
 
   const signOut = async () => {
