@@ -21,6 +21,7 @@ export function useRsvp(userId: string | undefined) {
   const fetchEntry = async () => {
     if (!supabase || !userId) {
       setLoading(false)
+      setError(null)
       return
     }
     setLoading(true)
@@ -30,11 +31,14 @@ export function useRsvp(userId: string | undefined) {
         .from('rsvp')
         .select('*')
         .eq('user_id', userId)
-        .single()
-      if (err && err.code !== 'PGRST116') throw err
+        .maybeSingle()
+      if (err) throw err
       setEntry(data)
     } catch (e) {
-      setError(e instanceof Error ? e.message : '오류가 발생했습니다')
+      const msg =
+        e instanceof Error ? e.message : '오류가 발생했습니다'
+      setError(msg)
+      console.error('[useRsvp] fetchEntry error:', e)
     } finally {
       setLoading(false)
     }
@@ -46,10 +50,10 @@ export function useRsvp(userId: string | undefined) {
 
   const upsertRsvp = async (data: {
     attendance: string
-    guest_side?: string
-    guest_count?: number
-    transport?: string
-    meal?: string
+    guest_side?: string | null
+    guest_count?: number | null
+    transport?: string | null
+    meal?: string | null
   }) => {
     if (!supabase || !userId) return
     const { error: err } = await supabase.from('rsvp').upsert(

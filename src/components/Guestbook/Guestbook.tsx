@@ -140,7 +140,7 @@ function GuestbookCard({
 }
 
 export function Guestbook({ config }: GuestbookProps) {
-  const { user, signInWithKakao, signOut } = useAuth()
+  const { user, signInWithKakao } = useAuth()
   const { entries, loading, error, heartLikedIds, addEntry, deleteEntry, toggleHeart } = useGuestbook(user?.id)
   const { toast, showToast } = useToast()
   const [message, setMessage] = useState('')
@@ -261,7 +261,7 @@ export function Guestbook({ config }: GuestbookProps) {
           </button>
         ) : (
           <div className="flex w-full flex-col gap-2">
-            <div className="flex w-full items-center gap-1.5 self-center rounded-[5px] bg-[#f7f4f124] px-3 py-2">
+            <div className="flex h-[54px] w-full items-center gap-1.5 self-center rounded-[5px] bg-[#f7f4f124] px-3 py-2">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -279,20 +279,9 @@ export function Guestbook({ config }: GuestbookProps) {
                 <Icon src="/assets/icons/guestbook/send.svg" size={18} />
               </button>
             </div>
-            <div className="flex min-h-[20px] items-center justify-between gap-2">
-              {submitError ? (
-                <p className="text-sm text-red-400">{submitError}</p>
-              ) : (
-                <span />
-              )}
-              <button
-                type="button"
-                onClick={() => signOut()}
-                className="shrink-0 text-xs text-[#f7f4f1]/60 hover:text-[#f7f4f1]/80"
-              >
-                로그아웃
-              </button>
-            </div>
+            {submitError && (
+              <p className="min-h-[20px] text-sm text-red-400">{submitError}</p>
+            )}
           </div>
         )}
       </div>
