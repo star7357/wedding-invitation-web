@@ -28,6 +28,8 @@ export function RSVP({ config }: RSVPProps) {
   const [submitting, setSubmitting] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [attendanceError, setAttendanceError] = useState('')
+  const [guestSideError, setGuestSideError] = useState('')
 
   const toFormAttendance = (v: string) =>
     v === '참석' || v === '참석할게요' ? '참석할게요' : v === '불참' || v === '참석이 어려워요' ? '참석이 어려워요' : v
@@ -68,8 +70,21 @@ export function RSVP({ config }: RSVPProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user) return
-    setSubmitting(true)
+
+    setAttendanceError('')
+    setGuestSideError('')
+
     const isNotAttending = attendance === '참석이 어려워요'
+    if (!attendance) {
+      setAttendanceError('참석 여부를 선택해 주세요.')
+      return
+    }
+    if (!isNotAttending && !guestSide) {
+      setGuestSideError('어느 분의 하객이신지 선택해 주세요.')
+      return
+    }
+
+    setSubmitting(true)
     try {
       await upsertRsvp({
         attendance: toDbAttendance(attendance) || attendance,
@@ -183,19 +198,22 @@ export function RSVP({ config }: RSVPProps) {
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => setAttendance('참석할게요')}
+            onClick={() => { setAttendance('참석할게요'); setAttendanceError('') }}
             className={`flex-1 ${optionBtn(attendance === '참석할게요')}`}
           >
             참석할게요
           </button>
           <button
             type="button"
-            onClick={() => setAttendance('참석이 어려워요')}
+            onClick={() => { setAttendance('참석이 어려워요'); setAttendanceError(''); setGuestSideError('') }}
             className={`flex-1 ${optionBtn(attendance === '참석이 어려워요')}`}
           >
             참석이 어려워요
           </button>
         </div>
+        {attendanceError && (
+          <p className="font-maruburi text-xs text-red-400">{attendanceError}</p>
+        )}
       </div>
 
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
@@ -203,19 +221,22 @@ export function RSVP({ config }: RSVPProps) {
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => setGuestSide('신랑 하객')}
+            onClick={() => { setGuestSide('신랑 하객'); setGuestSideError('') }}
             className={`flex-1 ${optionBtn(guestSide === '신랑 하객')}`}
           >
             신랑 하객
           </button>
           <button
             type="button"
-            onClick={() => setGuestSide('신부 하객')}
+            onClick={() => { setGuestSide('신부 하객'); setGuestSideError('') }}
             className={`flex-1 ${optionBtn(guestSide === '신부 하객')}`}
           >
             신부 하객
           </button>
         </div>
+        {guestSideError && (
+          <p className="font-maruburi text-xs text-red-400">{guestSideError}</p>
+        )}
       </div>
 
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
