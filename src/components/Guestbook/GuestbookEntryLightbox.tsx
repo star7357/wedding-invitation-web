@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Icon } from '@/components/ui/Icon'
+import { ensureHttps } from '@/lib/url'
 import type { GuestbookEntry } from '@/hooks/useGuestbook'
 
 interface GuestbookEntryLightboxProps {
@@ -168,7 +169,7 @@ export function GuestbookEntryLightbox({
                     <div className="flex min-w-0 items-center gap-3">
                       {e.author_avatar ? (
                         <img
-                          src={e.author_avatar}
+                          src={ensureHttps(e.author_avatar)}
                           alt=""
                           className="h-12 w-12 shrink-0 rounded-full object-cover"
                         />
@@ -236,7 +237,7 @@ export function GuestbookEntryLightbox({
                             <div className="flex min-w-0 items-center gap-2">
                               {c.author_avatar ? (
                                 <img
-                                  src={c.author_avatar}
+                                  src={ensureHttps(c.author_avatar)}
                                   alt=""
                                   className="h-8 w-8 shrink-0 rounded-full object-cover"
                                 />

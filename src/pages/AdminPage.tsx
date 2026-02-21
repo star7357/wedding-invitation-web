@@ -55,20 +55,14 @@ function AdminPage() {
       setLoading(true)
       setError(null)
       try {
-        if (user) {
-          const { data, error: err } = await client.rpc('get_rsvp_admin')
-          if (err) throw err
-          setRsvpList((data ?? []) as RsvpRow[])
-        } else {
-          const { data, error: err } = await client
-            .from('rsvp')
-            .select('id, user_id, attendance, guest_side, guest_count, transport, meal, created_at, updated_at')
-            .order('created_at', { ascending: false })
-          if (err) throw err
-          setRsvpList(
-            (data ?? []).map((r) => ({ ...r, display_name: '-' })) as RsvpRow[]
-          )
-        }
+        const { data, error: err } = await client
+          .from('rsvp')
+          .select('id, user_id, display_name, attendance, guest_side, guest_count, transport, meal, created_at, updated_at')
+          .order('created_at', { ascending: false })
+        if (err) throw err
+        setRsvpList(
+          (data ?? []).map((r) => ({ ...r, display_name: r.display_name ?? '-' })) as RsvpRow[]
+        )
       } catch (e) {
         setError(e instanceof Error ? e.message : '오류가 발생했습니다')
       } finally {

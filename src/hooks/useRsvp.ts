@@ -54,6 +54,7 @@ export function useRsvp(userId: string | undefined) {
     guest_count?: number | null
     transport?: string | null
     meal?: string | null
+    display_name?: string | null
   }) => {
     if (!supabase || !userId) return
     const { error: err } = await supabase.from('rsvp').upsert(

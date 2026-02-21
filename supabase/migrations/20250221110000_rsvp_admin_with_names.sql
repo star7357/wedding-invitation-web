@@ -17,7 +17,10 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  IF NOT (SELECT COALESCE(is_admin, false) FROM public.profiles WHERE id = auth.uid()) THEN
+  IF auth.uid() IS NULL THEN
+    RAISE EXCEPTION 'Unauthorized';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND is_admin = true) THEN
     RAISE EXCEPTION 'Unauthorized';
   END IF;
 

@@ -5,7 +5,7 @@
 Supabase 대시보드 → SQL Editor에서 아래 마이그레이션을 순서대로 실행하세요.
 
 1. `supabase/migrations/20250221100000_create_profiles.sql`
-2. `supabase/migrations/20250221110000_rsvp_admin_with_names.sql` (이름 표시용 RPC)
+2. `supabase/migrations/20250221120000_rsvp_display_name.sql` (이름 표시용 컬럼)
 
 또는 Supabase CLI 사용 시:
 

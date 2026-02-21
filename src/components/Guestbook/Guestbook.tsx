@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Section } from '@/components/layout/Section'
 import { Icon } from '@/components/ui/Icon'
 import { GuestbookEntryLightbox } from './GuestbookEntryLightbox'
+import { ensureHttps } from '@/lib/url'
 import { useAuth } from '@/hooks/useAuth'
 import { useGuestbook } from '@/hooks/useGuestbook'
 import { useToast } from '@/hooks/useToast'
@@ -74,7 +75,7 @@ function GuestbookCard({
         <div className="flex min-w-0 items-center gap-2">
           {entry.author_avatar ? (
             <img
-              src={entry.author_avatar}
+              src={ensureHttps(entry.author_avatar)}
               alt=""
               className="h-8 w-8 shrink-0 rounded-full object-cover"
             />
@@ -161,10 +162,11 @@ export function Guestbook({ config }: GuestbookProps) {
     user?.email ??
     '익명'
 
-  const authorAvatar =
+  const authorAvatar = ensureHttps(
     user?.user_metadata?.avatar_url ??
     user?.user_metadata?.picture ??
     user?.user_metadata?.profile_image
+  ) || undefined
 
   const handleSubmit = async () => {
     if (!message.trim() || !user) return

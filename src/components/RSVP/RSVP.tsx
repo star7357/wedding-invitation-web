@@ -57,6 +57,14 @@ export function RSVP({ config }: RSVPProps) {
     }
   }, [entry])
 
+  const displayName =
+    user?.user_metadata?.full_name ??
+    user?.user_metadata?.name ??
+    user?.user_metadata?.nickname ??
+    user?.user_metadata?.user_name ??
+    user?.user_metadata?.profile_nickname ??
+    null
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user) return
@@ -69,6 +77,7 @@ export function RSVP({ config }: RSVPProps) {
         guest_count: isNotAttending ? null : guestCount ? parseInt(guestCount, 10) : undefined,
         transport: isNotAttending ? null : transport || undefined,
         meal: isNotAttending ? null : toDbMeal(meal) || meal || undefined,
+        display_name: displayName,
       })
       setShowForm(false)
       setIsEditing(false)
