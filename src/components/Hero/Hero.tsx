@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Section } from '@/components/layout/Section'
-import { Icon } from '@/components/ui/Icon'
 import type { InvitationConfig } from '@/config/invitation'
 
 interface HeroProps {
@@ -36,7 +35,7 @@ export function Hero({ config }: HeroProps) {
         setShowMusicToast(false)
         setIsFadingOut(false)
       }, 300)
-    }, 4000)
+    }, 2000)
     return () => clearTimeout(timer)
   }, [showMusicToast])
 
@@ -100,31 +99,36 @@ export function Hero({ config }: HeroProps) {
 
       {wedding.bg_music && (
         <div
-          className="absolute left-4 top-4 z-30 flex items-center gap-2"
+          className="absolute right-4 top-4 z-30 flex items-center gap-3"
           style={{ top: 'max(1rem, env(safe-area-inset-top, 0px))' }}
         >
-          <button
-            type="button"
-            onClick={toggleMusic}
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[7px] bg-[#feeee0]/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm transition-opacity ${!isPlaying ? 'opacity-70' : 'opacity-100'}`}
-            aria-label={isPlaying ? '배경음악 일시정지' : '배경음악 재생'}
-          >
-            <Icon src="/assets/icons/icon_music.svg" size={20} className="text-[#feeee0]" />
-          </button>
           {showMusicToast && (
             <button
               type="button"
               onClick={startMusic}
-              className={`relative rounded-[10px] bg-black/40 px-3 py-2 font-maruburi text-sm text-[#feeee0] backdrop-blur-sm transition-opacity hover:bg-black/50 ${isFadingOut ? 'animate-fade-out' : 'animate-fade-in'}`}
+              className={`transition-opacity hover:opacity-95 ${isFadingOut ? 'animate-fade-out' : 'animate-fade-in'}`}
               aria-label="배경음악 재생"
             >
-              <span
-                className="absolute -left-1 top-1/2 h-0 w-0 -translate-y-1/2 border-[6px] border-transparent border-r-white"
-                aria-hidden
+              <img
+                src="/assets/icons/hero/hero_music_toast_msg.svg"
+                alt="배경음악과 함께 보기"
+                className="h-10 w-auto"
               />
-              <span>배경음악이 준비되었습니다</span>
             </button>
           )}
+          <button
+            type="button"
+            onClick={toggleMusic}
+            className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-[7px] shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm"
+            aria-label={isPlaying ? '배경음악 일시정지' : '배경음악 재생'}
+          >
+            <img
+              src={isPlaying ? '/assets/icons/hero/hero_music_on.svg' : '/assets/icons/hero/hero_music_off.svg'}
+              alt=""
+              className="h-10 w-10"
+              aria-hidden
+            />
+          </button>
         </div>
       )}
 
