@@ -14,7 +14,6 @@ function getDaysUntil(dateStr: string): number {
   return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
 }
 
-/** 5/5 어린이날 등 고정 공휴일 (월은 0-based) */
 function isHoliday(month: number, day: number): boolean {
   return (month === 4 && day === 5) // 5월 5일 어린이날
 }

@@ -6,14 +6,17 @@ declare global {
       maps: {
         Map: new (el: HTMLElement, options: { center: unknown; level: number }) => unknown
         LatLng: new (lat: number, lng: number) => unknown
+        Point: new (x: number, y: number) => unknown
         Marker: new (options: { position: unknown; map?: unknown }) => unknown
         CustomOverlay: new (options: {
           map?: unknown
           position: unknown
           content: string | HTMLElement
+          xAnchor?: number
           yAnchor?: number
-        }) => void
+        }) => { setPosition: (pos: unknown) => void }
         load: (callback: () => void) => void
+        event: { addListener: (target: unknown, type: string, fn: () => void) => void }
         services: {
           Status: { OK: string }
           Geocoder: new () => {
@@ -39,8 +42,9 @@ export const KakaoMap = forwardRef<KakaoMapHandle, KakaoMapProps>(function Kakao
   { address, apiKey, venueName },
   ref
 ) {
+  const INITIAL_LEVEL = 3
   const containerRef = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<{ panTo: (pos: unknown) => void } | null>(null)
+  const mapRef = useRef<{ panTo: (pos: unknown) => void; setLevel: (level: number) => void } | null>(null)
   const coordsRef = useRef<unknown>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -49,6 +53,7 @@ export const KakaoMap = forwardRef<KakaoMapHandle, KakaoMapProps>(function Kakao
       const map = mapRef.current
       const coords = coordsRef.current
       if (map && coords) {
+        map.setLevel(INITIAL_LEVEL)
         map.panTo(coords)
       }
     },
@@ -77,8 +82,13 @@ export const KakaoMap = forwardRef<KakaoMapHandle, KakaoMapProps>(function Kakao
 
         const map = new kakao.maps.Map(containerRef.current, {
           center: coords,
-          level: 3,
-        }) as { relayout?: () => void; panTo: (pos: unknown) => void }
+          level: INITIAL_LEVEL,
+        }) as {
+          relayout?: () => void
+          panTo: (pos: unknown) => void
+          setLevel: (level: number) => void
+          getProjection?: () => { pointFromCoords: (c: unknown) => { x: number; y: number }; coordsFromPoint: (p: unknown) => unknown }
+        }
         mapRef.current = map
 
         if (kakao.maps.Marker) {
@@ -86,19 +96,30 @@ export const KakaoMap = forwardRef<KakaoMapHandle, KakaoMapProps>(function Kakao
         }
 
         if (venueName && kakao.maps.CustomOverlay) {
-          const lat = parseFloat(result[0].y)
-          const lng = parseFloat(result[0].x)
-          const labelPosition = new kakao.maps.LatLng(lat + 0.0004, lng)
           const content = document.createElement('div')
           content.style.cssText =
-            'background:#fff;border-radius:6px;padding:4px 8px;box-shadow:0 2px 6px rgba(0,0,0,0.15);font-size:12px;font-weight:600;color:#333;white-space:nowrap;border:1px solid #e0e0e0'
+            'background:#fff;border-radius:4px;padding:2px 6px;box-shadow:0 2px 6px rgba(0,0,0,0.15);font-size:12px;font-weight:600;color:#333;white-space:nowrap;border:1px solid #e0e0e0;line-height:1.2'
           content.textContent = venueName
-          new kakao.maps.CustomOverlay({
+          const overlay = new kakao.maps.CustomOverlay({
             map,
-            position: labelPosition,
+            position: coords,
             content,
+            xAnchor: 0.5,
             yAnchor: 1,
           })
+
+          const PIXEL_OFFSET_ABOVE = 48
+          const updateOverlayPosition = () => {
+            const proj = map.getProjection?.()
+            if (!proj) return
+            const point = proj.pointFromCoords(coords)
+            const abovePoint = new kakao.maps.Point(point.x, point.y - PIXEL_OFFSET_ABOVE)
+            const aboveCoords = proj.coordsFromPoint(abovePoint)
+            overlay.setPosition(aboveCoords)
+          }
+
+          updateOverlayPosition()
+          kakao.maps.event.addListener(map, 'zoom_changed', updateOverlayPosition)
         }
 
         setTimeout(() => map.relayout?.(), 100)

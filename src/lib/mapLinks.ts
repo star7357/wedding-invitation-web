@@ -1,7 +1,3 @@
-/**
- * 모바일에서 지도 앱 직접 실행, 실패 시 웹 URL로 fallback
- */
-
 function isMobile(): boolean {
   return /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
@@ -41,16 +37,15 @@ export function openNaverMap(
   const app = getNaverAppUrl(venueName)
 
   if (isMobile()) {
-    let fallbackTimer: ReturnType<typeof setTimeout>
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') clearFallback()
+    }
     const clearFallback = () => {
       clearTimeout(fallbackTimer)
       document.removeEventListener('visibilitychange', onVisibilityChange)
     }
-    const onVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') clearFallback()
-    }
     document.addEventListener('visibilitychange', onVisibilityChange)
-    fallbackTimer = setTimeout(() => {
+    const fallbackTimer = setTimeout(() => {
       clearFallback()
       if (document.visibilityState === 'visible') window.open(web, '_blank')
     }, 1500)
@@ -72,16 +67,15 @@ export function openKakaoMap(
   const app = getKakaoAppUrl(maps)
 
   if (isMobile() && app) {
-    let fallbackTimer: ReturnType<typeof setTimeout>
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') clearFallback()
+    }
     const clearFallback = () => {
       clearTimeout(fallbackTimer)
       document.removeEventListener('visibilitychange', onVisibilityChange)
     }
-    const onVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') clearFallback()
-    }
     document.addEventListener('visibilitychange', onVisibilityChange)
-    fallbackTimer = setTimeout(() => {
+    const fallbackTimer = setTimeout(() => {
       clearFallback()
       if (document.visibilityState === 'visible') window.open(web, '_blank')
     }, 1500)

@@ -29,7 +29,6 @@ export function RSVP({ config }: RSVPProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
-  // Figma 디자인 값 ↔ DB 값 매핑 (기존 데이터 호환)
   const toFormAttendance = (v: string) =>
     v === '참석' || v === '참석할게요' ? '참석할게요' : v === '불참' || v === '참석이 어려워요' ? '참석이 어려워요' : v
   const toDbAttendance = (v: string) => (v === '참석할게요' ? '참석' : v === '참석이 어려워요' ? '불참' : v)
@@ -80,13 +79,11 @@ export function RSVP({ config }: RSVPProps) {
     }
   }
 
-  // Figma: 선택된 버튼 (연한 베이지), 비선택 (다크 + 얇은 테두리), 높이 42px, 한 줄 표시
   const optionBtn = (selected: boolean) =>
     selected
       ? 'flex min-h-[42px] items-center justify-center whitespace-nowrap rounded-[5px] px-4 py-2.5 font-maruburi text-sm font-medium bg-[#FEEEE0] text-[#3b291e] transition'
       : 'flex min-h-[42px] items-center justify-center whitespace-nowrap rounded-[5px] px-4 py-2.5 font-maruburi text-sm font-medium border border-[#feeee0]/40 bg-transparent text-[#feeee0] hover:bg-[#feeee0]/5 transition'
 
-  // Supabase DB 값 → 표시용 텍스트 (Figma 문구)
   const displayValue = (key: string, value: string | number | null): string => {
     if (value == null || value === '') return '-'
     const v = String(value)
@@ -96,15 +93,10 @@ export function RSVP({ config }: RSVPProps) {
     return v
   }
 
-  // 카드 스타일 (Figma: rounded block, darker brown)
-  const rsvpCardClass = 'w-full rounded-[5px] bg-[#f7f4f124] px-4 py-4 font-maruburi'
-
-  // 1. 로그아웃: Figma 디자인 - 아이콘+라벨 목록 + 로그인 버튼
   if (!user) {
     return (
       <Section>
         <div className="flex w-full flex-col items-center gap-[30px]">
-          {/* 헤더: 아이콘 + RSVP */}
           <div className="flex items-center justify-center gap-1.5">
             <Icon src="/assets/icons/section/rsvp.svg" size={26} className="text-[#feeee0]" />
             <h2 className="font-maruburi text-base font-bold uppercase tracking-wide text-[#feeee0]">
@@ -112,7 +104,6 @@ export function RSVP({ config }: RSVPProps) {
             </h2>
           </div>
 
-          {/* 카드 + 버튼 (간격 축소) */}
           <div className="flex w-full flex-col gap-4">
             <div className="w-full rounded-[5px] bg-[#f7f4f124] px-4 py-5 font-maruburi">
               <ul className="flex flex-col gap-4">
@@ -152,21 +143,9 @@ export function RSVP({ config }: RSVPProps) {
     )
   }
 
-  // 로그인 공통: 헤더 (Figma 디자인)
-  const SectionHeader = () => (
-    <div className="flex items-center justify-center gap-1.5">
-      <Icon src="/assets/icons/section/rsvp.svg" size={26} className="text-[#feeee0]" />
-      <h2 className="font-maruburi text-base font-bold uppercase tracking-wide text-[#feeee0]">
-        {config.copy.section_rsvp}
-      </h2>
-    </div>
-  )
-
-  // 공통 버튼 스타일 (Guestbook 버튼과 동일: rounded-[5px], px-[13px], py-[17px])
   const ctaButtonClass =
     'flex w-full items-center justify-center gap-2 rounded-[5px] bg-[#FEEEE0] px-[13px] py-[17px] font-maruburi text-sm font-semibold text-[#3b291e] transition hover:opacity-90 disabled:opacity-50'
 
-  // 2. 로그인 + RSVP 작성 전: 라벨만 표시 + "참석 정보 입력하기" 버튼
   const BeforeWriteView = () => (
     <div className="flex w-full flex-col gap-4">
       <div className="w-full rounded-[5px] bg-[#f7f4f124] px-4 py-5 font-maruburi">
@@ -185,13 +164,11 @@ export function RSVP({ config }: RSVPProps) {
     </div>
   )
 
-  // 3. 로그인 + 폼 (Figma node 9-1069 디자인)
   const FormView = () => (
     <form
       onSubmit={handleSubmit}
       className="flex w-full flex-col gap-6 rounded-[5px] bg-[#f7f4f124] px-4 py-6 font-maruburi"
     >
-      {/* 참석 가능 여부 * */}
       <div className="flex flex-col gap-2">
         <label className="font-maruburi text-sm font-medium text-[#feeee0]">참석 가능 여부 *</label>
         <div className="flex gap-2">
@@ -212,7 +189,6 @@ export function RSVP({ config }: RSVPProps) {
         </div>
       </div>
 
-      {/* 어느 분의 하객이신가요? * - 불참 시 비활성화 */}
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
         <label className="font-maruburi text-sm font-medium text-[#feeee0]">어느 분의 하객이신가요? *</label>
         <div className="flex gap-2">
@@ -233,7 +209,6 @@ export function RSVP({ config }: RSVPProps) {
         </div>
       </div>
 
-      {/* 몇 분이 오시나요? (본인 포함) - 불참 시 비활성화 */}
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
         <label className="font-maruburi text-sm font-medium text-[#feeee0]">몇 분이 오시나요? (본인 포함)</label>
         <div className="flex h-[42px] items-center gap-2">
@@ -257,7 +232,6 @@ export function RSVP({ config }: RSVPProps) {
         </div>
       </div>
 
-      {/* 이동 수단 - 불참 시 비활성화 */}
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
         <label className="font-maruburi text-sm font-medium text-[#feeee0]">이동 수단</label>
         <div className="flex gap-2">
@@ -278,7 +252,6 @@ export function RSVP({ config }: RSVPProps) {
         </div>
       </div>
 
-      {/* 식사를 하실 예정이신가요? - 불참 시 비활성화 */}
       <div className={`flex flex-col gap-2 ${attendance === '참석이 어려워요' ? 'pointer-events-none opacity-50' : ''}`}>
         <label className="font-maruburi text-sm font-medium text-[#feeee0]">식사를 하실 예정이신가요?</label>
         <div className="flex gap-2">
@@ -306,7 +279,6 @@ export function RSVP({ config }: RSVPProps) {
         </div>
       </div>
 
-      {/* 취소 + 참석 정보 저장하기 */}
       <div className="flex min-h-[42px] gap-2 pt-1">
         <button
           type="button"
@@ -326,7 +298,6 @@ export function RSVP({ config }: RSVPProps) {
     </form>
   )
 
-  // 4. 로그인 + 작성 완료: Supabase DB 값 표시 + "참석 정보 수정하기" 버튼
   const CompletedView = () => (
     <div className="flex w-full flex-col gap-4">
       <div className="w-full rounded-[5px] bg-[#f7f4f124] px-4 py-5 font-maruburi">
@@ -340,7 +311,7 @@ export function RSVP({ config }: RSVPProps) {
                   ? entry!.guest_count != null
                     ? `${entry!.guest_count}명`
                     : null
-                  : (entry as Record<string, string | null>)[field.key]
+                  : entry![field.key as keyof typeof entry]
             return (
               <Fragment key={field.key}>
                 <div className="flex items-center gap-2">
@@ -364,7 +335,12 @@ export function RSVP({ config }: RSVPProps) {
   return (
     <Section>
       <div className="flex w-full flex-col items-center gap-[30px]">
-        <SectionHeader />
+        <div className="flex items-center justify-center gap-1.5">
+          <Icon src="/assets/icons/section/rsvp.svg" size={26} className="text-[#feeee0]" />
+          <h2 className="font-maruburi text-base font-bold uppercase tracking-wide text-[#feeee0]">
+            {config.copy.section_rsvp}
+          </h2>
+        </div>
 
         {loading ? (
           <div className="flex justify-center py-8">

@@ -33,6 +33,7 @@ export interface Wedding {
   time: string
   hero_image: string
   venue: Venue
+  bg_music?: string
 }
 
 export interface Transport {

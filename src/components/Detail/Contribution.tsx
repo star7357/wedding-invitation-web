@@ -16,7 +16,6 @@ function AccountEntry({
 }: {
   label: string
   account: string
-  holderName: string
   onCopy?: () => void
 }) {
   const handleCopy = async (e: React.MouseEvent) => {
@@ -79,7 +78,7 @@ function CollapsibleCard({
         </svg>
       </button>
       {open && (
-        <div className="space-y-2 rounded-b-[10px] bg-[#D4C0B4] border-t border-[#D4C0B4]/80 px-4 py-3">
+        <div className="space-y-2 rounded-b-[10px] bg-[#D4C0B4] border-t border-[#D4C0B4]/80 p-3">
           {children}
         </div>
       )}
@@ -97,16 +96,16 @@ export function Contribution({ config }: ContributionProps) {
   }
 
   const groomAccounts = [
-    groom.account && { label: `신랑 | ${groom.name}`, account: groom.account, holderName: groom.name },
-    groom.father.account && { label: `신랑아버지 | ${groom.father.name}`, account: groom.father.account, holderName: groom.father.name },
-    groom.mother.account && { label: `신랑어머니 | ${groom.mother.name}`, account: groom.mother.account, holderName: groom.mother.name },
-  ].filter(Boolean) as { label: string; account: string; holderName: string }[]
+    groom.account && { label: `신랑 | ${groom.name}`, account: groom.account },
+    groom.father.account && { label: `신랑아버지 | ${groom.father.name}`, account: groom.father.account },
+    groom.mother.account && { label: `신랑어머니 | ${groom.mother.name}`, account: groom.mother.account },
+  ].filter(Boolean) as { label: string; account: string }[]
 
   const brideAccounts = [
-    bride.account && { label: `신부 | ${bride.name}`, account: bride.account, holderName: bride.name },
-    bride.father.account && { label: `신부아버지 | ${bride.father.name}`, account: bride.father.account, holderName: bride.father.name },
-    bride.mother.account && { label: `신부어머니 | ${bride.mother.name}`, account: bride.mother.account, holderName: bride.mother.name },
-  ].filter(Boolean) as { label: string; account: string; holderName: string }[]
+    bride.account && { label: `신부 | ${bride.name}`, account: bride.account },
+    bride.father.account && { label: `신부아버지 | ${bride.father.name}`, account: bride.father.account },
+    bride.mother.account && { label: `신부어머니 | ${bride.mother.name}`, account: bride.mother.account },
+  ].filter(Boolean) as { label: string; account: string }[]
 
   return (
     <Section>
@@ -127,7 +126,6 @@ export function Contribution({ config }: ContributionProps) {
                   key={a.label}
                   label={a.label}
                   account={a.account}
-                  holderName={a.holderName}
                   onCopy={showToast}
                 />
               ))}
@@ -140,7 +138,6 @@ export function Contribution({ config }: ContributionProps) {
                   key={a.label}
                   label={a.label}
                   account={a.account}
-                  holderName={a.holderName}
                   onCopy={showToast}
                 />
               ))}

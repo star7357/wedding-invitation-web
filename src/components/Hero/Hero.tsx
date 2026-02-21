@@ -1,4 +1,6 @@
+import { useRef, useState } from 'react'
 import { Section } from '@/components/layout/Section'
+import { Icon } from '@/components/ui/Icon'
 import type { InvitationConfig } from '@/config/invitation'
 
 interface HeroProps {
@@ -21,6 +23,28 @@ function formatDateTime(dateStr: string, timeStr: string) {
 export function Hero({ config }: HeroProps) {
   const { groom, bride, wedding } = config
   const dateTime = formatDateTime(wedding.date, wedding.time)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  const toggleMusic = async () => {
+    const src = wedding.bg_music
+    if (!src) return
+    if (!audioRef.current) {
+      audioRef.current = new Audio(src)
+      audioRef.current.loop = true
+    }
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      try {
+        await audioRef.current.play()
+        setIsPlaying(true)
+      } catch {
+        /* autoplay blocked or file not found */
+      }
+    }
+  }
 
   return (
     <Section className="relative h-[888px] min-h-[70vh] overflow-hidden px-0 pt-0 pb-0" animate={false}>
@@ -32,13 +56,16 @@ export function Hero({ config }: HeroProps) {
         }}
       />
 
-      <button
-        type="button"
-        className="absolute right-[53px] top-[70px] z-20 flex h-10 w-10 items-center justify-center rounded-[7px] bg-[#feeee0]/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm"
-        aria-label="배경음악 재생"
-      >
-        <img src="/assets/icons/hero/music.svg" alt="" className="h-4 w-4" />
-      </button>
+      {wedding.bg_music && (
+        <button
+          type="button"
+          onClick={toggleMusic}
+          className={`absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-[7px] bg-[#feeee0]/32 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_1px_0_0_rgba(255,255,255,0.32),inset_0_-1px_1px_rgba(0,0,0,0.13)] backdrop-blur-sm transition-opacity ${!isPlaying ? 'opacity-70' : 'opacity-100'}`}
+          aria-label={isPlaying ? '배경음악 일시정지' : '배경음악 재생'}
+        >
+          <Icon src="/assets/icons/icon_music.svg" size={20} className="text-[#feeee0]" />
+        </button>
+      )}
 
       <div
         className="absolute bottom-0 left-0 right-0 z-20 h-[221px] bg-gradient-to-t from-[var(--color-bg)] to-transparent"

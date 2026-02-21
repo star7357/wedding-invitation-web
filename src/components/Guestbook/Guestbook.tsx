@@ -23,18 +23,23 @@ interface GuestbookProps {
 
 function SkeletonCard() {
   return (
-    <div className="flex h-[192px] w-[167px] shrink-0 flex-col rounded-[5px] bg-[#f7f4f124] p-3.5 font-maruburi">
-      <div className="flex items-center gap-2">
-        <div className="h-8 w-8 shrink-0 rounded-full bg-[#f7f4f1]/30" />
-        <div className="h-4 w-16 rounded bg-[#f7f4f1]/30" />
+    <div className="flex h-[192px] w-[167px] shrink-0 flex-col rounded-[5px] bg-[#f7f4f124] p-3.5 font-maruburi text-left">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="h-8 w-8 shrink-0 rounded-full bg-[#f7f4f1]/30" />
+          <div className="h-4 w-16 shrink-0 rounded bg-[#f7f4f1]/30" />
+        </div>
       </div>
-      <div className="mt-2 space-y-1.5">
+      <div className="mt-2 min-h-0 flex-1 space-y-1.5">
         <div className="h-3 w-full rounded bg-[#f7f4f1]/30" />
         <div className="h-3 w-3/4 rounded bg-[#f7f4f1]/30" />
       </div>
-      <div className="mt-auto flex gap-3">
-        <div className="h-3 w-8 rounded bg-[#f7f4f1]/30" />
-        <div className="h-3 w-8 rounded bg-[#f7f4f1]/30" />
+      <div className="mt-auto flex items-center justify-between gap-3">
+        <div className="h-3 w-14 rounded bg-[#f7f4f1]/30" />
+        <div className="flex items-center gap-2">
+          <div className="h-3 w-10 rounded bg-[#f7f4f1]/30" />
+          <div className="h-3 w-6 rounded bg-[#f7f4f1]/30" />
+        </div>
       </div>
     </div>
   )

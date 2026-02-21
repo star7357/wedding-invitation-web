@@ -145,12 +145,8 @@ export function GuestbookEntryLightbox({
         ✕
       </button>
 
-      {/* 3-Row Grid: Row0=여백, Row1=스크롤(카드+입력창 포함), Row2=N/N */}
       <div className="grid min-h-0 flex-1 grid-rows-[48px_1fr_auto]">
-        {/* Row 0: 여백 */}
         <div aria-hidden />
-
-        {/* Row 1: 방명록+댓글 (스크롤 영역) */}
         <div
           ref={scrollRef}
           className="scrollbar-hide flex min-h-0 flex-row flex-nowrap snap-x snap-mandatory overflow-x-auto overflow-y-hidden overscroll-x-contain scroll-smooth"
@@ -260,10 +256,10 @@ export function GuestbookEntryLightbox({
                                   onDelete(c.id)
                                 }}
                                 onPointerDown={(ev) => ev.stopPropagation()}
-                                className="shrink-0 p-1 text-[var(--color-cream)]/60 hover:text-[var(--color-cream)] touch-manipulation"
+                                className="-ml-1 shrink-0 p-1.5 text-[var(--color-cream)]/60 hover:text-[var(--color-cream)] touch-manipulation"
                                 aria-label="댓글 삭제"
                               >
-                                <Icon src="/assets/icons/guestbook/trash.svg" size={14} />
+                                <Icon src="/assets/icons/guestbook/trash.svg" size={18} />
                               </button>
                             )}
                           </div>
@@ -341,7 +337,6 @@ export function GuestbookEntryLightbox({
         })}
         </div>
 
-        {/* Row 2: N/N (고정) */}
         {entries.length > 1 && (
           <div className="flex min-h-0 justify-center py-1">
             <span className="rounded-full bg-[var(--color-primary)]/50 px-3 py-1 font-maruburi text-sm text-[var(--color-cream)]">

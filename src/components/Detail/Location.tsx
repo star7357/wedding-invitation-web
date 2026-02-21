@@ -35,12 +35,13 @@ export function Location({ config }: LocationProps) {
         </div>
         <div className="flex flex-col items-center gap-2">
           <p className="font-maruburi text-base font-bold text-center">{venue.name}</p>
-          <div className="flex items-center gap-2.5">
-            <p className="font-maruburi text-[15px] font-semibold">{venue.address}</p>
+          <div className="flex w-full items-center justify-center gap-2">
+            <span className="h-9 w-9 shrink-0" aria-hidden />
+            <p className="min-w-0 flex-1 font-maruburi text-[15px] font-semibold text-center">{venue.address}</p>
             <button
               type="button"
               onClick={handleCopyAddress}
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center p-1 text-[#feeee0] hover:opacity-80 active:opacity-100"
+              className="flex h-9 w-9 shrink-0 items-center justify-center p-1 text-[#feeee0] hover:opacity-80 active:opacity-100"
               aria-label="주소 복사"
             >
               <Icon src="/assets/icons/location/copy.svg" size={18} className="text-[#feeee0]" />
@@ -68,7 +69,7 @@ export function Location({ config }: LocationProps) {
             <button
               type="button"
               onClick={() => openNaverMap(venue.maps, venue.name)}
-              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#b5d382] px-2.5 py-2.5 font-medium text-[#3e5318] shadow-[1px_2.5px_4px_#28170d]"
+              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#B6D383] px-2.5 py-2.5 font-maruburi text-sm font-semibold text-[#3e5318] shadow-[1px_2.5px_4px_#28170d]"
             >
               <img
                 src="/assets/icons/icon_navermap.png"
@@ -81,7 +82,7 @@ export function Location({ config }: LocationProps) {
             <button
               type="button"
               onClick={() => openKakaoMap(venue.maps)}
-              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#ffea90] px-2.5 py-2.5 font-medium text-[#665718] shadow-[1px_2.5px_4px_#28170d]"
+              className="flex flex-1 items-center justify-center gap-2.5 rounded-[5px] bg-[#FFEA91] px-2.5 py-2.5 font-maruburi text-sm font-semibold text-[#665718] shadow-[1px_2.5px_4px_#28170d]"
             >
               <img
                 src="/assets/icons/icon_kakaomap.png"

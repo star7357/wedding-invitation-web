@@ -23,6 +23,7 @@ wedding:
   date: "2026-05-09"
   time: "12:30"
   hero_image: "/assets/images/hero.webp"
+  bg_music: "/assets/audio/bg.mp3"  # 배경음악 (mp3/ogg/m4a). public/assets/audio/bg.mp3 에 파일 추가
   venue:
     name: 오드힐하우스
     address: "서울시 서초구 방배로 47 오드힐하우스"

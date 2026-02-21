@@ -1,7 +1,3 @@
-/**
- * 모바일 포함 크로스 브라우저 복사
- * navigator.clipboard 실패 시 execCommand 폴백
- */
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
     if (navigator.clipboard?.writeText) {
@@ -9,7 +5,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       return true
     }
   } catch {
-    // clipboard API 실패 시 폴백
+    /* fallback to execCommand */
   }
 
   const textarea = document.createElement('textarea')
