@@ -204,42 +204,43 @@ export function Guestbook({ config }: GuestbookProps) {
           </h2>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center py-8">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-          </div>
-        ) : error ? (
-          <p className="text-sm text-red-600">{error}</p>
-        ) : (
-          <div className="scrollbar-hide -mx-4 w-[calc(100%+2rem)] overflow-x-auto">
-            <div className="flex gap-3 px-4">
-              {showSkeleton ? (
-                Array.from({ length: SKELETON_CARD_COUNT }).map((_, i) => (
-                  <SkeletonCard key={i} />
-                ))
-              ) : (
-                displayEntries.map((entry, i) => (
-                  <GuestbookCard
-                    key={entry.id}
-                    entry={entry}
-                    commentCount={entries.filter((e) => e.parent_id === entry.id).length}
-                    onClick={() => setLightboxIndex(i)}
-                    onDelete={async (id) => {
-                      if (!confirm('삭제하시겠습니까?')) return
-                      await deleteEntry(id)
-                      showToast('삭제되었습니다')
-                    }}
-                    canDelete={user?.id === entry.user_id}
-                    heartLikedIds={user ? heartLikedIds : undefined}
-                    onHeart={user ? toggleHeart : undefined}
-                  />
-                ))
-              )}
+        <div className="flex w-full flex-col items-center gap-[16px]">
+          {loading ? (
+            <div className="flex justify-center py-8">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
             </div>
-          </div>
-        )}
+          ) : error ? (
+            <p className="text-sm text-red-600">{error}</p>
+          ) : (
+            <div className="scrollbar-hide -mx-4 w-[calc(100%+2rem)] overflow-x-auto">
+              <div className="flex gap-3 px-4">
+                {showSkeleton ? (
+                  Array.from({ length: SKELETON_CARD_COUNT }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                  ))
+                ) : (
+                  displayEntries.map((entry, i) => (
+                    <GuestbookCard
+                      key={entry.id}
+                      entry={entry}
+                      commentCount={entries.filter((e) => e.parent_id === entry.id).length}
+                      onClick={() => setLightboxIndex(i)}
+                      onDelete={async (id) => {
+                        if (!confirm('삭제하시겠습니까?')) return
+                        await deleteEntry(id)
+                        showToast('삭제되었습니다')
+                      }}
+                      canDelete={user?.id === entry.user_id}
+                      heartLikedIds={user ? heartLikedIds : undefined}
+                      onHeart={user ? toggleHeart : undefined}
+                    />
+                  ))
+                )}
+              </div>
+            </div>
+          )}
 
-        {!user ? (
+          {!user ? (
           <button
             type="button"
             onClick={async () => {
@@ -269,7 +270,7 @@ export function Guestbook({ config }: GuestbookProps) {
           </button>
         ) : (
           <div className="flex w-full flex-col gap-2">
-            <div className="flex h-[54px] w-full items-center gap-1.5 self-center rounded-[5px] bg-[#f7f4f124] px-3 py-2">
+            <div className="flex h-[54px] w-full min-w-0 items-center gap-1.5 self-center overflow-hidden rounded-[5px] bg-[#f7f4f124] px-3 py-2">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -293,6 +294,7 @@ export function Guestbook({ config }: GuestbookProps) {
             )}
           </div>
         )}
+        </div>
       </div>
 
       {lightboxIndex !== null && displayEntries.length > 0 && (
