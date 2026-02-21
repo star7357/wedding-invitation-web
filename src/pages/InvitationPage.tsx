@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { MobileFrame } from '@/components/layout/MobileFrame'
+import { useAuth } from '@/hooks/useAuth'
 import { Hero } from '@/components/Hero/Hero'
 import { BasicInfo } from '@/components/Detail/BasicInfo'
 import { Location } from '@/components/Detail/Location'
@@ -11,6 +12,7 @@ import { loadInvitationConfig } from '@/config/invitation'
 import type { InvitationConfig } from '@/config/invitation'
 
 export function InvitationPage() {
+  const { user, signOut } = useAuth()
   const [config, setConfig] = useState<InvitationConfig | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -48,6 +50,19 @@ export function InvitationPage() {
         <GalleryGrid config={config} />
         <Guestbook config={config} />
         <RSVP config={config} />
+        {user && (
+          <div className="flex justify-center px-4 pb-8">
+            <button
+              type="button"
+              onClick={() => {
+                if (confirm('로그아웃 하시겠습니까?')) signOut()
+              }}
+              className="text-xs text-[#f7f4f1]/60 hover:text-[#f7f4f1]/80"
+            >
+              로그아웃
+            </button>
+          </div>
+        )}
       </div>
     </MobileFrame>
   )
