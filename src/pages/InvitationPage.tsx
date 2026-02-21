@@ -16,6 +16,7 @@ export function InvitationPage() {
   const [config, setConfig] = useState<InvitationConfig | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   useEffect(() => {
     loadInvitationConfig()
@@ -54,9 +55,7 @@ export function InvitationPage() {
           <div className="flex justify-center px-4 pb-8">
             <button
               type="button"
-              onClick={() => {
-                if (confirm('로그아웃 하시겠습니까?')) signOut()
-              }}
+              onClick={() => setShowLogoutConfirm(true)}
               className="text-xs text-[#f7f4f1]/60 hover:text-[#f7f4f1]/80"
             >
               로그아웃
@@ -64,6 +63,44 @@ export function InvitationPage() {
           </div>
         )}
       </div>
+
+      {showLogoutConfirm && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 px-4"
+          onClick={() => setShowLogoutConfirm(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="logout-dialog-title"
+        >
+          <div
+            className="w-full max-w-[320px] rounded-[10px] bg-[var(--color-bg)] p-6 shadow-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p id="logout-dialog-title" className="font-maruburi text-center text-base font-medium text-[#f7f4f1]">
+              로그아웃 하시겠습니까?
+            </p>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 rounded-[5px] border border-[#f7f4f1]/40 bg-transparent py-2.5 font-maruburi text-sm font-medium text-[#f7f4f1]"
+              >
+                취소
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowLogoutConfirm(false)
+                  signOut()
+                }}
+                className="flex-1 rounded-[5px] bg-[#FEEEE0] py-2.5 font-maruburi text-sm font-semibold text-[#3b291e]"
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </MobileFrame>
   )
 }
