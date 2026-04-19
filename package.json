@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "gallery:build": "node scripts/convert-to-webp.js && node scripts/generate-gallery.js",
     "predev": "node scripts/generate-gallery.js",
     "prebuild": "node scripts/generate-gallery.js",
     "dev": "vite",
